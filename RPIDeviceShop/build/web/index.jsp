@@ -42,23 +42,23 @@
 
             <div id="indexRightColumn">
                 <div class="categoryBox">
-                    <a href="#">
-                        <span class="categoryLabelText">computers</span>
+                    <a href=#">
+                        <span class="categoryLabelText">Computers</span>
                     </a>
                 </div>
                 <div class="categoryBox">
                     <a href="#">
-                        <span class="categoryLabelText">tablets</span>
+                        <span class="categoryLabelText">Tablets</span>
                     </a>
                 </div>
                 <div class="categoryBox">
                     <a href="#">
-                        <span class="categoryLabelText">phones</span>
+                        <span class="categoryLabelText">Phones</span>
                     </a>
                 </div>
                 <div class="categoryBox">
                     <a href="#">
-                        <span class="categoryLabelText">games</span>
+                        <span class="categoryLabelText">Games</span>
                     </a>
                 </div>
             </div>
