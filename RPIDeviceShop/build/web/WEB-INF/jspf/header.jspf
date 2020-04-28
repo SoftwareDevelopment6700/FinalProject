@@ -1,12 +1,11 @@
 <%-- any content can be specified here e.g.: --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/affablebean.css">
-        <title>The Affable Bean</title>
+        <link rel="stylesheet" type="text/css" href="css/rpideviceshop.css">
+        <title>RPI Device Shop</title>
     </head>
     <body>
         <div id="main">
@@ -18,18 +17,20 @@
                     </div>
 
                     <div class="headerWidget">
-                        [ checkout button ]
-                    </div>
-
-                    <div class="headerWidget">
                         [ shopping cart widget ]
                     </div>
 
                 </div>
 
                 <a href="#">
-                    <img src="#" id="logo" alt="Affable Bean logo">
+                    <img src="#" id="logo" alt="RPI Device Shop logo">
                 </a>
 
-                <img src="#" id="logoText" alt="the affable bean">
+                <img src="#" id="logoText" alt="RPI Device Shop">
+            </div>
+
+            <div id="indexLeftColumn">
+                <div id="welcomeText">
+                    <p>[ welcome text ]</p>
+                </div>
             </div>
