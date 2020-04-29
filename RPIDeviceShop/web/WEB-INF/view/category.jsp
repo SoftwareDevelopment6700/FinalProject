@@ -1,141 +1,78 @@
-<%--
-    Document   : category
-    Created on : Jun 9, 2010, 3:59:32 PM
-    Author     : tgiunipero
---%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<sql:query var="categories" dataSource="jdbc/myDatasource">
+    SELECT * FROM category
+</sql:query>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/affablebean.css">
-        <title>The Affable Bean</title>
-    </head>
-    <body>
-        <div id="main">
-            <div id="header">
-                <div id="widgetBar">
+<sql:query var="selectedCategory" dataSource="jdbc/myDatasource">
+    SELECT name FROM category WHERE id = ?
+    <sql:param value="${pageContext.request.queryString}"/>
+</sql:query>
 
-                    <div class="headerWidget">
-                        [ language toggle ]
-                    </div>
-
-                    <div class="headerWidget">
-                        [ checkout button ]
-                    </div>
-
-                    <div class="headerWidget">
-                        [ shopping cart widget ]
-                    </div>
-
-                </div>
-
-                <a href="#">
-                    <img src="#" id="logo" alt="Affable Bean logo">
-                </a>
-
-                <img src="#" id="logoText" alt="the affable bean">
-            </div>
+<sql:query var="categoryProducts" dataSource="jdbc/myDatasource">
+    SELECT * FROM product WHERE category_id = ?
+    <sql:param value="${pageContext.request.queryString}"/>
+</sql:query>
 
             <div id="categoryLeftColumn">
-                <div class="categoryButton" id="selectedCategory">
-                    <span class="categoryText">dairy</span>
-                </div>
 
-                <a href="#" class="categoryButton">
-                    <span class="categoryText">meats</span>
-                </a>
+                <c:forEach var="category" items="${categories.rows}">
 
-                <a href="#" class="categoryButton">
-                    <span class="categoryText">bakery</span>
-                </a>
+                    <c:choose>
+                        <c:when test="${category.id == pageContext.request.queryString}">
+                            <div class="categoryButton" id="selectedCategory">
+                                <span class="categoryText">
+                                    ${category.name}
+                                </span>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="category?${category.id}" class="categoryButton">
+                                <span class="categoryText">
+                                    ${category.name}
+                                </span>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
 
-                <a href="#" class="categoryButton">
-                    <span class="categoryText">fruit & veg</span>
-                </a>
+                </c:forEach>
+
             </div>
 
             <div id="categoryRightColumn">
-                <p id="categoryTitle">[ selected category ]</p>
+
+                <p id="categoryTitle">${selectedCategory.rows[0].name}</p>
 
                 <table id="productTable">
-                    <tr>
-                        <td class="lightBlue">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="lightBlue">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="lightBlue">[ price ]</td>
-                        <td class="lightBlue">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="white">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="white">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="white">[ price ]</td>
-                        <td class="white">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
+                    <c:forEach var="product" items="${categoryProducts.rows}" varStatus="iter">
 
-                    <tr>
-                        <td class="lightBlue">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="lightBlue">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="lightBlue">[ price ]</td>
-                        <td class="lightBlue">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
+                        <tr class="${((iter.index % 2) == 0) ? 'lightBlue' : 'white'}">
+                            <td>
+                                <img src="${initParam.productImagePath}${product.name}.png"
+                                    alt="image of ${product.name}">
+                            </td>
+                            <td>
+                                ${product.name}
+                                <br>
+                                <span class="smallText">${product.description}</span>
+                            </td>
+                            <td>
+                                &euro; ${product.price} / unit
+                            </td>
+                            <td>
+                                <form action="addToCart" method="post">
+                                    <input type="hidden"
+                                           name="productId"
+                                           value="${product.id}">
+                                    <input type="submit"
+                                           value="add to cart">
+                                </form>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td class="white">
-                            <img src="#" alt="product image">
-                        </td>
-                        <td class="white">
-                            [ product name ]
-                            <br>
-                            <span class="smallText">[ product description ]</span>
-                        </td>
-                        <td class="white">[ price ]</td>
-                        <td class="white">
-                            <form action="#" method="post">
-                                <input type="submit" value="purchase button">
-                            </form>
-                        </td>
-                    </tr>
+                    </c:forEach>
+
                 </table>
             </div>
-
-            <div id="footer">
-                <hr>
-                <p id="footerText">[ footer text ]</p>
-            </div>
-        </div>
-    </body>
-</html>

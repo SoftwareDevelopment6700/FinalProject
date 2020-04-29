@@ -11,6 +11,6 @@
     <description>Connects to the RPIDeviceShop database</description>
     <property name="URL" value="jdbc:mysql://localhost:3306/mysql?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC "/>
     <property name="User" value="root"/>
-    <property name="Password" value="boboweiqi123"/>
+    <property name="Password" value="password"/>
   </jdbc-connection-pool>
 </resources>
